@@ -1,4 +1,6 @@
 #!/usr/bin/python3
+# Author: Jabir Bin Jahangir
+
 import requests, json
 import pandas as pd
 
@@ -77,6 +79,8 @@ class ThingspeakRead:
             self.data_feeds[ind]["created_at"]= self.data_feeds[ind]["created_at"].dt.tz_convert(self.tz)        
         return self.data_feeds;
 
+    def readAll(self):
+        return
 
     def toCSV(self):
         for ind in range(0, self.n_r):
