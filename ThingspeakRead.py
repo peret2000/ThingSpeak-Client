@@ -14,7 +14,7 @@ class ThingspeakRead:
     api_r = [];
     n_r= 0
     date_suffix = "%2000:00:00"
-    data_feeds = [[], []]
+    data_feeds = [] 
     tz = ''
     def __init__(self, channelID, readKey, tz="US/Central"):  
         self.channelID = channelID; 
@@ -22,6 +22,9 @@ class ThingspeakRead:
         self.tz = tz
         if len(self.channelID) ==  len(self.readKey): 
             self.n_r = len(self.channelID)
+            
+            self.data_feeds = [[] * self.n_r for i in range(self.n_r)]
+
             for ind in range(0, len(self.channelID)):
                 self.api_r.append(self.base_r.format(self.channelID[ind], self.readKey[ind]))
 
