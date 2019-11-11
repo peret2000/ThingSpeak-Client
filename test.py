@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 ts = ThingspeakRead([819840, 819881],["064FW8NTX3QRY4QP","VL6335AOPWV00E4F"]); 
 # ts = ThingspeakRead([819840],["064FW8NTX3QRY4QP"]); 
 # dat   = ts.read(2000);
-dat = ts.readRange("2019-10-21", "2019-11-10")
+dat = ts.readRange("2019-10-19", "2019-11-10")
 
 
 ts.toCSV();

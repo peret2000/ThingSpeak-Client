@@ -66,15 +66,15 @@ class ThingspeakRead:
                 print(r)
                 data = requests.get(r).json();
                 print("feedlen == " + str(len(data["feeds"])) )
-                self.data_feeds[ind] = data["feeds"] + self.data_feeds[ind];
-                if len(data['feeds']) == 0 :
-                    break
-                else : 
-                    d_str = data["feeds"][0]["created_at"][0:10];
-                    # would miss data within 1s
-                    t_str = data["feeds"][0]["created_at"][11:18] + str(int(data["feeds"][0]["created_at"][18]) - 1);
-                    self.end = d_str + "%20"+t_str;  
 
+                if len(data['feeds']) == 1 :
+                    self.data_feeds[ind] = data["feeds"] + self.data_feeds[ind]; 
+                    break
+                else :
+                    self.data_feeds[ind] = data["feeds"][1:] + self.data_feeds[ind]; 
+                    d_str = data["feeds"][0]["created_at"][0:10];
+                    t_str = data["feeds"][0]["created_at"][11:19];
+                    self.end = d_str + "%20"+t_str;  
         # print(json.dumps(self.data_feeds, indent=2))
             self.data_feeds[ind] = pd.DataFrame(self.data_feeds[ind]);
             self.data_feeds[ind].iloc[:, range(2,10)] = self.data_feeds[ind].iloc[:, range(2,10)].apply(pd.to_numeric) 
