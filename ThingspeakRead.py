@@ -4,13 +4,13 @@
 import requests, json
 import pandas as pd
 
-# Thingspeak API class on Python3
+# Thingspeak Client API class on Python3
 # Outputs the data as Pandas dataframe
 # Allows reading from multiple channels.
-# Allows reading for any given - will allow reading more than 8000 data point.
+# Allows reading data within any given date range (will allow reading more than 8000 data points)
 
 class ThingspeakRead:
-    base_r = "https://api.thingspeak.com/channels/{0}/feeds.json?api_key={1}";
+    base_r = "https://api.thingspeak.com/channels/{0}/feeds.json?&api_key={1}";
     api_r = [];
     n_r= 0
     date_suffix = "%2000:00:00"
@@ -56,11 +56,8 @@ class ThingspeakRead:
             print("SENDING REQ FOR CHANNEL :: {0}".format(ind+1));
             self.start = start + self.date_suffix ;
             self.end = end+ self.date_suffix ;
-            # send request until feed becomes zero
-                ## send  a request
-                ## check if feed is zero
-                ## if not zero set startdate with given startdate and set end date with first field date and repeat
 
+           # Request loop to grab more batches of data
             while True: 
                 r = self.api_r[ind] + "&start={0}&end={1}".format(self.start, self.end)
                 print(r)
@@ -68,6 +65,8 @@ class ThingspeakRead:
                 print("feedlen == " + str(len(data["feeds"])) )
 
                 if len(data['feeds']) == 1 :
+                    # because the end date is taken from actual data timestamp, each response will contain at 
+                    # least the end timastamp 
                     self.data_feeds[ind] = data["feeds"] + self.data_feeds[ind]; 
                     break
                 else :
@@ -79,7 +78,7 @@ class ThingspeakRead:
             self.data_feeds[ind] = pd.DataFrame(self.data_feeds[ind]);
             self.data_feeds[ind].iloc[:, range(2,10)] = self.data_feeds[ind].iloc[:, range(2,10)].apply(pd.to_numeric) 
             self.data_feeds[ind][["created_at"]] = self.data_feeds[ind][["created_at"]].apply(pd.to_datetime)  
-            self.data_feeds[ind]["created_at"]= self.data_feeds[ind]["created_at"].dt.tz_convert(self.tz)        
+            # self.data_feeds[ind]["created_at"]= self.data_feeds[ind]["created_at"].dt.tz_convert(self.tz)        
         return self.data_feeds;
 
     def readAll(self):
