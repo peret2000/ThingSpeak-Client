@@ -66,4 +66,3 @@ data = data.div(24);
 data.plot.bar();
 plt.show()
 
-
