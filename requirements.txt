@@ -3,3 +3,4 @@ flask-restful
 gunicorn
 requests
 scipy
+flask-cors
