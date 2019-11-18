@@ -43,7 +43,7 @@ z = z.mul(15)
 z.plot()
 plt.show()
 
-# generate daily energy data 
+# generate daily energy data cond
 f_res = [];
 x_names = ['bifacial_south_wh','bifacial_south_gr', 'monofacial', 'horizontal']
 for idx, day in z.groupby(z.index.date):
@@ -56,7 +56,6 @@ for idx, day in z.groupby(z.index.date):
         # make a dataframe whree there are five columns each days data and each days energy
     f_res.append(results); 
 
-print(f_res)
 
 
 # plot a multibar plot
