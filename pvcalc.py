@@ -1,6 +1,6 @@
 from ThingspeakRead import ThingspeakRead
 import pandas as pd
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 from scipy import integrate
 import numpy as np
 
