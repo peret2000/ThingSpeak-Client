@@ -9,8 +9,8 @@ def calc_energy():
     
     # ts = ThingspeakRead([819840, 819881],["064FW8NTX3QRY4QP","VL6335AOPWV00E4F"]); 
     ts = ThingspeakRead([819840],["064FW8NTX3QRY4QP"], tz='Asia/Dhaka'); 
-    # dat   = ts.read(2000);
-    dat = ts.readRange("2019-11-01", "2019-11-15")
+    dat   = ts.read(8000);
+    # dat = ts.readRange("2019-11-01", "2019-11-15")
     # ts.toCSV();
     y = dat[0]
 
