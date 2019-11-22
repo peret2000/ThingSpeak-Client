@@ -17,8 +17,8 @@ import numpy as np
 
 # ts = ThingspeakRead([819840, 819881],["064FW8NTX3QRY4QP","VL6335AOPWV00E4F"]); 
 ts = ThingspeakRead([819840],["064FW8NTX3QRY4QP"], tz='Asia/Dhaka'); 
-dat   = ts.read(8000);
-# dat = ts.readRange("2019-11-01", "2019-11-15")
+# dat   = ts.read(8000);
+dat = ts.readRange([2019,10,20,0,0,0 ], [2019,11,13,0,0,0] );
 # ts.toCSV();
 y = dat[0]
 
@@ -36,6 +36,8 @@ z = z.assign(monofacial=y.iloc[:,3])
 z = z.assign(horizon=y.iloc[:,6])
 
 z = z.mul(15)
+print(z.head())
+
 # print(z)
 # z = z.drop(['entry_id'], axis=1);
 
@@ -55,8 +57,6 @@ for idx, day in z.groupby(z.index.date):
         # .astype('timedelta64[s]')
         # make a dataframe whree there are five columns each days data and each days energy
     f_res.append(results); 
-
-
 
 # plot a multibar plot
 data= pd.DataFrame(f_res); 
