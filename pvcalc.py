@@ -5,6 +5,20 @@ from scipy import integrate
 import numpy as np
 
 
+def dateparse(ds):
+    year, month, day = [int(x)  for x in  ds.split('-')] 
+    return [year, month, day, 0, 0,0] 
+
+def get_csv(dates):
+    ts = ThingspeakRead([819840, 819881],["064FW8NTX3QRY4QP","VL6335AOPWV00E4F"], tz='Asia/Dhaka'); 
+    # ts = ThingspeakRead([819840],["064FW8NTX3QRY4QP"], tz='Asia/Dhaka');
+    # dat   = ts.read(1000);
+    s = dates['start']
+    e = dates['end']
+    dat = ts.readRange(dateparse(s), dateparse(e))
+    ts.toZip()
+    return
+
 def calc_energy():
     
     # ts = ThingspeakRead([819840, 819881],["064FW8NTX3QRY4QP","VL6335AOPWV00E4F"]); 
@@ -48,3 +62,5 @@ def calc_energy():
             # make a dataframe whree there are five columns each days data and each days energy
         f_res.append(results); 
     return f_res;
+
+

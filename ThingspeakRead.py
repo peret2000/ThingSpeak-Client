@@ -5,6 +5,7 @@ import requests, json
 import pandas as pd
 import urllib.parse 
 import datetime
+from zipfile import ZipFile
 
 # Thingspeak Client API class on Python3
 # Outputs the data as Pandas dataframe
@@ -54,9 +55,10 @@ class ThingspeakRead:
             # convert field data to floats
             self.data_feeds[ind].iloc[:, range(2,10)] = self.data_feeds[ind].iloc[:, range(2,10)].apply(pd.to_numeric) 
             self.data_feeds[ind][["created_at"]] = self.data_feeds[ind][["created_at"]].apply(pd.to_datetime)
-            self.data_feeds[ind]["created_at"]= self.data_feeds[ind]["created_at"].dt.tz_convert(self.tz)   
-
+            self.data_feeds[ind]["created_at"]= self.data_feeds[ind]["created_at"].dt.tz_convert(self.tz)  
+            # self.data_feeds[ind].set_index('created_at', inplace=True, drop=True) 
         return self.data_feeds;
+
 
     def readRange(self, start, end):
         """[Read data from a given date range. Allows bypassing the 8000 results limit per request.]
@@ -94,6 +96,7 @@ class ThingspeakRead:
             self.data_feeds[ind] = pd.DataFrame(self.data_feeds[ind]);
             self.data_feeds[ind].iloc[:, range(2,10)] = self.data_feeds[ind].iloc[:, range(2,10)].apply(pd.to_numeric) 
             self.data_feeds[ind][["created_at"]] = self.data_feeds[ind][["created_at"]].apply(pd.to_datetime)  
+            # self.data_feeds[ind].set_index('created_at', inplace=True, drop=True)
             # self.data_feeds[ind]["created_at"]= self.data_feeds[ind]["created_at"].dt.tz_convert(self.tz)        
         return self.data_feeds;
 
@@ -107,5 +110,12 @@ class ThingspeakRead:
         for ind in range(0, self.n_r):
             self.data_feeds[ind].to_csv(r".\data_channel{}.csv".format(ind+1))
 
+    def toZip(self):
+        with ZipFile('data.zip', 'w') as zip:
+            for ind in range(0, self.n_r):
+                filename = r".\data_channel{}.csv".format(ind+1)
+                self.data_feeds[ind].to_csv(filename)
+                zip.write(filename)
+            zip.close();
    
 

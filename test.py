@@ -18,8 +18,8 @@ import numpy as np
 # ts = ThingspeakRead([819840, 819881],["064FW8NTX3QRY4QP","VL6335AOPWV00E4F"]); 
 ts = ThingspeakRead([819840],["064FW8NTX3QRY4QP"], tz='Asia/Dhaka'); 
 # dat   = ts.read(8000);
-dat = ts.readRange([2019,10,20,0,0,0 ], [2019,11,13,0,0,0] );
-# ts.toCSV();
+dat = ts.readRange([2019,11,12,0,0,0 ], [2019,11,13,0,0,0] );
+ts.toCSV();
 y = dat[0]
 
 # compute energy and compare 
