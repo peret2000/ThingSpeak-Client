@@ -34,7 +34,7 @@ class Download(Resource):
         # grab data 
         pvcalc.get_csv(args)
         # create zip archieve
-        return send_file('./data.zip')
+        return send_file('./data.zip', as_attachment=True, attachment_filename='tsdata.zip')
 
 
 
