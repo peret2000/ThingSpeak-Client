@@ -13,15 +13,15 @@ from zipfile import ZipFile
 # Allows reading data within any given date range (will allow reading more than 8000 data points)
 
 class ThingspeakRead:
-    base_r = "https://api.thingspeak.com/channels/{0}/feeds.json?&api_key={1}";
-    api_r = [];
+    base_r = "https://api.thingspeak.com/channels/{0}/feeds.json?&api_key={1}"
+    api_r = []
     n_r= 0
     date_suffix = "%2000:00:00"
     data_feeds = [] 
     tz = ''
     def __init__(self, channelID, readKey, tz="US/Central"):  
-        self.channelID = channelID; 
-        self.readKey = readKey;
+        self.channelID = channelID
+        self.readKey = readKey
         self.tz = tz
         if len(self.channelID) ==  len(self.readKey): 
             self.n_r = len(self.channelID)
@@ -40,7 +40,7 @@ class ThingspeakRead:
              - json response date format
         ''' 
         try: 
-            year, month, day, hour, minute, second = datearray; 
+            year, month, day, hour, minute, second = datearray 
             return urllib.parse.quote(datetime.datetime(year, month, day, hour, minute, second).strftime("%Y-%m-%d %H:%M:%S"),safe='-:')
         except ValueError:
             raise Exception("Make sure date array contains [YY, MM, DD, h, m, s] ")
@@ -49,15 +49,15 @@ class ThingspeakRead:
         for ind in range(0, self.n_r):  
             r = self.api_r[ind] + "&results={0}".format(res)
             print(r)
-            req = requests.get(r).json();
+            req = requests.get(r).json()
             # print(json.dumps(req.json(), indent=2));
-            self.data_feeds[ind] = pd.DataFrame(req["feeds"]);
+            self.data_feeds[ind] = pd.DataFrame(req["feeds"])
             # convert field data to floats
             self.data_feeds[ind].iloc[:, range(2,10)] = self.data_feeds[ind].iloc[:, range(2,10)].apply(pd.to_numeric) 
             self.data_feeds[ind][["created_at"]] = self.data_feeds[ind][["created_at"]].apply(pd.to_datetime)
             self.data_feeds[ind]["created_at"]= self.data_feeds[ind]["created_at"].dt.tz_convert(self.tz)  
             # self.data_feeds[ind].set_index('created_at', inplace=True, drop=True) 
-        return self.data_feeds;
+        return self.data_feeds
 
 
     def readRange(self, start, end):
@@ -72,12 +72,12 @@ class ThingspeakRead:
         """
 
         for ind in range(0, self.n_r):
-            print("SENDING REQ FOR CHANNEL :: {0}".format(ind+1));
+            print("SENDING REQ FOR CHANNEL :: {0}".format(ind+1))
             self.start = self.tsConv(start) # start + self.date_suffix ;
             self.end = self.tsConv(end) #end+ self.date_suffix ;
            # Request loop
             while True: 
-                r = self.api_r[ind] + "&start={0}&end={1}&timezone={2}".format(self.start, self.end, urllib.parse.quote(self.tz , safe='')); 
+                r = self.api_r[ind] + "&start={0}&end={1}&timezone={2}".format(self.start, self.end, urllib.parse.quote(self.tz , safe='')) 
                 print(r)
                 data = requests.get(r).json();
                 print("feedlen == " + str(len(data["feeds"])) )

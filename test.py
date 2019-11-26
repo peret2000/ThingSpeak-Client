@@ -46,14 +46,14 @@ z.plot()
 plt.show()
 
 # generate daily energy data cond
-f_res = [];
+f_res = []
 x_names = ['bifacial_south_wh','bifacial_south_gr', 'monofacial', 'horizontal']
 for idx, day in z.groupby(z.index.date):
     results = {}
-    results['date'] = idx.strftime("%Y-%m-%d");
+    results['date'] = idx.strftime("%Y-%m-%d")
     for i in range(4):
         int_res = integrate.trapz(y = day.iloc[:,i], x = day.index ).astype('float64')/ (10**9 * 3600)
-        results[x_names[i]] = int_res;
+        results[x_names[i]] = int_res
         # .astype('timedelta64[s]')
         # make a dataframe whree there are five columns each days data and each days energy
     f_res.append(results); 
