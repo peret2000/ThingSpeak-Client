@@ -113,7 +113,7 @@ class ThingspeakRead:
     def toZip(self):
         with ZipFile('data.zip', 'w') as zip:
             for ind in range(0, self.n_r):
-                filename = r".\data_channel{}.csv".format(ind+1)
+                filename = r"data_channel{}.csv".format(ind+1)
                 self.data_feeds[ind].to_csv(filename)
                 zip.write(filename)
             zip.close();
