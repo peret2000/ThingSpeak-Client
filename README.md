@@ -1,4 +1,4 @@
-# ThingSpeak Read API Python Client
+# ThingSpeak Python Client
 
 Access the data on ThingSpeak platform through its Read API.
 
