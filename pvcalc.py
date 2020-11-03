@@ -1,3 +1,6 @@
+# PV energy calculation routine from collected ThingSpeak data
+# Author: Jabir Bin Jahangir
+
 from ThingspeakRead import ThingspeakRead
 import pandas as pd
 # import matplotlib.pyplot as plt
