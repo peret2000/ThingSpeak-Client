@@ -1,9 +1,8 @@
-# PV energy calculation routine from collected ThingSpeak data
 # Author: Jabir Bin Jahangir
+# PV energy calculation routine from collected ThingSpeak data
 
 from ThingspeakRead import ThingspeakRead
 import pandas as pd
-# import matplotlib.pyplot as plt
 from scipy import integrate
 import numpy as np
 
@@ -34,25 +33,21 @@ def calc_energy():
     # compute energy and compare 
 
     y.set_index('created_at', inplace=True, drop=True)
-
     z = pd.DataFrame()
-
     res = y.iloc[: ,1].add(y.iloc[: ,2])
     z = z.assign(bifacial_south_wh=res) 
     res = y.iloc[:,4].add(y.iloc[: ,5])
     z = z.assign(bifacial_south_gr=res) 
     z = z.assign(monofacial=y.iloc[:,3]) 
     z = z.assign(horizon=y.iloc[:,6])
-
-    z = z.mul(15)
-    # print(z)
+    z = z.mul(15)  # V_mp = 15 V
     # z = z.drop(['entry_id'], axis=1);
 
     # plot daily current for bifacial and monofacial
     # z.plot()
     # plt.show()
 
-# generate daily energy data cond
+    # generate daily energy data cond
     f_res = [];
     x_names = ['bifacial_south_wh','bifacial_south_gr', 'monofacial', 'horizontal']
     for idx, day in z.groupby(z.index.date):
