@@ -13,13 +13,6 @@ class ThingSpeakClient:
     ThingSpeak Client class 
     '''
 
-    # init vars
-    base_r = "https://api.thingspeak.com/channels/{0}/feeds.json?&api_key={1}"
-    api_r = []
-    n_r= 0 # Number of channels to read from  
-    date_suffix = "%2000:00:00"
-    data_feeds = [] 
-    tz = ''
 
     def __init__(self, channelID, readKey, tz="US/Central"):  
         '''
@@ -31,6 +24,16 @@ class ThingSpeakClient:
             tz {string}  -- Time zone
 
         '''
+
+        # init vars
+        self.base_r = "https://api.thingspeak.com/channels/{0}/feeds.json?&api_key={1}"
+        self.api_r = []
+        self.n_r= 0 # Number of channels to read from  
+        self.date_suffix = "%2000:00:00"
+        self.data_feeds = [] 
+        self.tz = ''
+
+
         self.channelID = channelID
         self.readKey = readKey
         self.tz = tz
@@ -70,6 +73,8 @@ class ThingSpeakClient:
         Returns:
             [pandas dataframe] -- [Returns a Pandas Dataframe array where each array element contains data from each channel.]
         """
+        self.data_feeds = []
+        self.data_feeds = [[] * self.n_r for i in range(self.n_r)]
 
         for ind in range(0, self.n_r):
 
