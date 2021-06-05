@@ -1,4 +1,4 @@
-from ThingspeakRead import ThingspeakRead
+from ThingSpeakClient import ThingSpeakClient
 import pandas as pd
 import matplotlib.pyplot as plt
 from scipy import integrate
@@ -16,7 +16,7 @@ import numpy as np
 # grab data
 
 # ts = ThingspeakRead([819840, 819881],["064FW8NTX3QRY4QP","VL6335AOPWV00E4F"]); 
-ts = ThingspeakRead([819840],["064FW8NTX3QRY4QP"], tz='Asia/Dhaka'); 
+ts = ThingSpeakClient([819840],["064FW8NTX3QRY4QP"], tz='Asia/Dhaka'); 
 # dat   = ts.read(8000);
 dat = ts.readRange([2019,11,12,0,0,0 ], [2019,11,13,0,0,0] );
 ts.toCSV();
