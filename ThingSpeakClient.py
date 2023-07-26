@@ -51,7 +51,7 @@ class ThingSpeakClient:
         '''
         for ind in range(0, self.n_r):  
             r = self.api_r[ind] + "&results={0}".format(res)
-            print(r)
+            #print(r)
             req = requests.get(r).json()
             # print(json.dumps(req.json(), indent=2));
             self.data_feeds[ind] = pd.DataFrame(req["feeds"])
@@ -93,7 +93,8 @@ class ThingSpeakClient:
 
                 # Debug print
                 print("Feed Length::  " + str(len(data["feeds"])) )
-                print(r)
+                print("&start={0}&end={1}&timezone={2}" \
+                    .format(self.start, self.end, urllib.parse.quote(self.tz , safe='')))
 
                 if len(data['feeds']) == 1 :
                     self.data_feeds[ind] = data["feeds"] + self.data_feeds[ind] 
