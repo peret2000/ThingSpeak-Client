@@ -110,7 +110,7 @@ class ThingSpeakClient:
             # Create pandas dataframe
             self.data_feeds[ind] = pd.DataFrame(self.data_feeds[ind]) 
             self.data_feeds[ind].iloc[:, range(2,10)] = self.data_feeds[ind].iloc[:, range(2,10)].apply(pd.to_numeric) 
-            self.data_feeds[ind][["created_at"]] = self.data_feeds[ind][["created_at"]].apply(pd.to_datetime)  
+            self.data_feeds[ind][["created_at"]] = self.data_feeds[ind][["created_at"]].apply(pd.to_datetime, utc=True)
 
             # self.data_feeds[ind].set_index('created_at', inplace=True, drop=True)
             # self.data_feeds[ind]["created_at"]= self.data_feeds[ind]["created_at"].dt.tz_convert(self.tz)        
